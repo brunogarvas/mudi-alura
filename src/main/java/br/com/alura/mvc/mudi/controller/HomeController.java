@@ -1,5 +1,6 @@
 package br.com.alura.mvc.mudi.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,26 +24,10 @@ public class HomeController {
 	private PedidoRepository pedidoRepository;
 
 	@GetMapping
-	public ModelAndView home() {
-		
-//		Pedido pedido = new Pedido();
-//		pedido.setNomeProduto("Dave Grohl - O Contador de Histórias: Memórias de Vida e Música");
-//		pedido.setUrlImagem("https://images-na.ssl-images-amazon.com/images/I/41FAElBHlHL._SY498_BO1,204,203,200_.jpg");
-//		pedido.setUrlProduto("https://www.amazon.com.br/gp/product/6555605588/");
-//		pedido.setDescricao("Livro de memórias de Dave Grohl traz relato emocionante sobre a vida de um dos maiores nomes do rock internacional");
-//		pedido.setDataEntrega(LocalDate.now());
-//		pedido.setValorNegociado(BigDecimal.valueOf(59.90));
-//		
-//		List<Pedido> pedidos = Arrays.asList(pedido);
-		
-//		List<Pedido> pedidos = pedidoRepository.findAll();
-//		model.addAttribute("pedidos", pedidos);		
-//		return "home";
-		
-		ModelAndView mv = new ModelAndView("home");
-		List<Pedido> pedidos = pedidoRepository.findAll();
-		mv.addObject("pedidos", pedidos);
-		return mv;
+	public String home(Model model, Principal principal) {
+		List<Pedido> pedidos = pedidoRepository.findAllByUsuario(principal.getName());
+		model.addAttribute("pedidos", pedidos);
+		return "home";
 	}
 	
 	@GetMapping("/{status}")

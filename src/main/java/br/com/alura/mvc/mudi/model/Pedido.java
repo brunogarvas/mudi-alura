@@ -3,6 +3,7 @@ package br.com.alura.mvc.mudi.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -10,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
@@ -34,6 +36,7 @@ public class Pedido {
 	private StatusPedido status;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "username")
 	private User user;
 	
 	public String getNomeProduto() {
@@ -102,6 +105,10 @@ public class Pedido {
 
 	public User getUser() {
 		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 		
 }
